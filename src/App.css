@@ -1,4 +1,6 @@
-/* 1. Global Reset & Fonts */
+/* =========================================
+   1. GLOBAL RESET & BODY
+   ========================================= */
 :root {
   font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -9,37 +11,92 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  /* flexbox on body centers the whole app vertically on the screen */
+  /* Centers the main app vertically */
   display: flex;
   align-items: center; 
   justify-content: center;
+  /* Deep purple/blue gradient background */
   background: radial-gradient(circle at top left, #2b1055, #7597de);
   background-attachment: fixed;
   color: white;
 }
 
-/* 2. Main Container */
+/* =========================================
+   2. AUTH HEADER (Fixed Top-Right)
+   ========================================= */
+.auth-header {
+  position: fixed;   /* Sticks to the viewport window */
+  top: 20px;         /* 20px from the very top */
+  right: 20px;       /* 20px from the very right */
+  z-index: 9999;     /* Sit on top of absolutely everything */
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-info img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.auth-header button {
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  background: rgba(255, 255, 255, 0.1); /* Glass style */
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.auth-header button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* =========================================
+   3. MAIN CONTAINER
+   ========================================= */
 .container {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
-  box-sizing: border-box; /* Ensures padding doesn't break width */
+  box-sizing: border-box; 
 }
 
-/* 3. The Title */
+/* =========================================
+   4. TITLE STYLING
+   ========================================= */
 h1 {
   font-size: 3.5rem;
   margin-bottom: 2rem;
-  background: linear-gradient(to right, #00f260, #0575e6);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   font-weight: 800;
   letter-spacing: -2px;
+  /* Flex aligns the emoji and text */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px; 
 }
 
-/* 4. Search Box Styling */
+/* The neon gradient applies ONLY to the text, not the emoji */
+.title-text {
+  background: linear-gradient(to right, #00f260, #0575e6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; 
+}
+
+/* =========================================
+   5. SEARCH BOX
+   ========================================= */
 .search-box {
   background: rgba(255, 255, 255, 0.1);
   padding: 10px;
@@ -77,32 +134,36 @@ button {
   color: white;
   font-weight: bold;
   cursor: pointer;
-  white-space: nowrap;
+  white-space: nowrap; 
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
-button:hover {
+/* Specific hover for the 'Add Coin' button (not the auth button) */
+.search-box button:hover {
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(118, 75, 162, 0.4);
 }
 
-/* 5. The Grid Layout (UPDATED for Centering) */
+/* =========================================
+   6. GRID LAYOUT
+   ========================================= */
 .grid {
-  display: flex;              /* Changed from grid to flex for better centering */
-  flex-wrap: wrap;            /* Allow wrapping */
-  justify-content: center;    /* Pushes everything to the middle */
+  display: flex;              
+  flex-wrap: wrap;            
+  justify-content: center;    /* Keeps cards centered even if there's only 1 */
   gap: 30px;
   padding: 20px;
   width: 100%;
   box-sizing: border-box;
 }
 
-/* 6. The Glass Cards */
+/* =========================================
+   7. GLASS CARDS
+   ========================================= */
 .card {
-  /* Fix width so they don't stretch weirdly */
-  flex: 1 1 250px;            /* Grow: 1, Shrink: 1, Basis: 250px */
-  max-width: 350px;           /* Stop them from becoming giant */
-  min-width: 250px;           /* Stop them from becoming too small */
+  flex: 1 1 250px;            /* Responsive sizing */
+  max-width: 350px;           
+  min-width: 250px;           
   
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(16px);
@@ -111,11 +172,10 @@ button:hover {
   border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 30px;
   
-  /* Center Text inside the card */
   text-align: center;         
   display: flex;
   flex-direction: column;
-  align-items: center;        /* Centers items horizontally in the column */
+  align-items: center;        
   
   transition: all 0.3s ease;
   position: relative;
@@ -129,7 +189,6 @@ button:hover {
   background: rgba(255, 255, 255, 0.1);
 }
 
-/* Card Typography */
 .card h2 {
   margin: 0;
   font-size: 1.5rem;
@@ -160,11 +219,13 @@ button:hover {
   background: rgba(255, 0, 0, 0.1);
 }
 
-/* --- MOBILE RESPONSIVENESS --- */
+/* =========================================
+   8. MOBILE RESPONSIVENESS
+   ========================================= */
 @media (max-width: 600px) {
   body {
-    align-items: flex-start; /* On mobile, start at top (don't center vertically) */
-    padding-top: 20px;
+    align-items: flex-start; /* Start at top on mobile */
+    padding-top: 60px;       /* Give space for the fixed header */
   }
   
   .container {
@@ -173,6 +234,24 @@ button:hover {
 
   h1 {
     font-size: 2rem;
+    flex-direction: column; /* Stack rocket on top of text */
+    gap: 5px;
+  }
+
+  /* Header adjustments */
+  .auth-header {
+    top: 15px;
+    right: 15px;
+  }
+  
+  .auth-header button {
+    padding: 6px 12px; 
+    font-size: 0.8rem;
+  }
+
+  .user-info img {
+    width: 28px;
+    height: 28px;
   }
 
   /* Stack Search Box */
@@ -192,11 +271,8 @@ button:hover {
     border-bottom: 1px solid rgba(255,255,255,0.1);
   }
 
-  button {
-    width: 100%;       
-  }
-  
+  /* Full width cards on mobile */
   .card {
-    max-width: 100%; /* Allow full width on mobile */
+    max-width: 100%; 
   }
 }
