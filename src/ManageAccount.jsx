@@ -2,18 +2,19 @@ import React, { useState } from 'react';
 import { deleteDoc, doc } from 'firebase/firestore';
 import { deleteUser } from 'firebase/auth';
 import { db, auth } from './firebase';
+import { translations } from './translations'; // Import texts
 
-const ManageAccount = ({ user, onBack }) => {
+const ManageAccount = ({ user, onBack, lang = 'en' }) => {
   const [isDeleting, setIsDeleting] = useState(false);
+  const t = translations[lang]; // Get current language texts
 
   // 1. CLEAR DATA ONLY (Keep Account)
   const handleClearData = async () => {
-    if (!window.confirm("Are you sure? This will wipe your portfolio and watchlist. This cannot be undone.")) return;
+    if (!window.confirm(t.confirmReset)) return;
     
     setIsDeleting(true);
     try {
       await deleteDoc(doc(db, "users", user.uid));
-      alert("Portfolio reset successfully.");
       // Force reload to reset local state
       window.location.reload();
     } catch (error) {
@@ -25,7 +26,7 @@ const ManageAccount = ({ user, onBack }) => {
 
   // 2. DELETE EVERYTHING (Nuke Account)
   const handleDeleteAccount = async () => {
-    const confirm1 = window.confirm("⚠ PERMANENTLY DELETE ACCOUNT?\n\nThis will delete your login and all data. You cannot recover this.");
+    const confirm1 = window.confirm(`⚠ ${t.confirmDelete}`);
     if (!confirm1) return;
 
     setIsDeleting(true);
@@ -56,7 +57,7 @@ const ManageAccount = ({ user, onBack }) => {
         onClick={onBack} 
         className="mb-6 text-sm text-gray-500 hover:text-black flex items-center gap-1 transition-colors"
       >
-        ← Back to Dashboard
+        {t.back}
       </button>
 
       <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
@@ -78,16 +79,16 @@ const ManageAccount = ({ user, onBack }) => {
           
           {/* Section 1: Portfolio Management */}
           <div>
-            <h3 className="text-lg font-bold text-gray-900 mb-2">Portfolio Data</h3>
+            <h3 className="text-lg font-bold text-gray-900 mb-2">{t.portfolioData}</h3>
             <p className="text-gray-600 mb-4 text-sm">
-              You can reset your portfolio watchlist and holdings without deleting your account.
+              {t.resetDesc}
             </p>
             <button 
               onClick={handleClearData}
               disabled={isDeleting}
               className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-lg transition-colors border border-gray-200"
             >
-              Reset Portfolio
+              {t.resetPortfolio}
             </button>
           </div>
 
@@ -95,16 +96,16 @@ const ManageAccount = ({ user, onBack }) => {
 
           {/* Section 2: Danger Zone */}
           <div>
-            <h3 className="text-lg font-bold text-red-600 mb-2">Danger Zone</h3>
+            <h3 className="text-lg font-bold text-red-600 mb-2">{t.dangerZone}</h3>
             <p className="text-gray-600 mb-4 text-sm">
-              Permanently delete your account and all associated data. This action cannot be undone.
+              {t.deleteDesc}
             </p>
             <button 
               onClick={handleDeleteAccount}
               disabled={isDeleting}
               className="px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 font-bold rounded-lg transition-colors border border-red-200"
             >
-              {isDeleting ? "Processing..." : "Delete Account"}
+              {isDeleting ? t.processing : t.deleteAccount}
             </button>
           </div>
 
