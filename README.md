@@ -1,22 +1,21 @@
 # CryptoVault - Real-Time Crypto Portfolio Tracker
 
-**Live Demo:** https://crypto-dashboard-three-tau.vercel.app/
-
+**Live Demo:** https://crypto-dashboard-three-tau.vercel.app
 ## 🚀 Overview
 
-CryptoVault is a robust, real-time cryptocurrency dashboard that allows users to track market prices, manage a personal portfolio, and visualize price trends. Unlike standard tracker tutorials, this application features **production-grade resilience**, handling API rate limits gracefully, sanitizing user inputs automatically, and persisting state across devices using Firebase Cloud Firestore.
+CryptoVault is a robust, real-time cryptocurrency dashboard that allows users to track market prices, manage a personal portfolio, and visualize price trends. Designed with international users in mind, it features a **fully bilingual interface (English/Turkish)** and production-grade resilience against API limits.
 
 Built with **React (Vite)** and **Firebase**, it solves the common "stale data" problem by syncing user portfolios in real-time while minimizing API usage to stay within free-tier limits.
 
 ## ✨ Key Features
 
-* **Real-Time Market Data:** Live pricing updates via the CoinGecko API with auto-refresh intervals.
-* **Persistent Portfolio:** Users can log in via **Google Auth** to save their watchlist and holdings to the cloud (Firestore).
-* **Interactive Charts:** Dynamic area charts (Recharts) that visualize price history (24h, 7d, 30d) and color-code based on profit/loss trends.
-* **Smart Input Sanitization:** Automatically detects and fixes common ID errors (e.g., typing `shiba` auto-corrects to `shiba-inu`, `bnb` to `binancecoin`).
-* **Precision Formatting:** "Smart Decimal" logic automatically expands precision for micro-cap coins (like Pepe at $0.000009) while keeping large cap coins clean ($90,000.00).
-* **Account Management:** Dedicated settings to reset portfolio data or permanently delete user accounts and data (GDPR compliant).
-* **Responsive Design:** Fully mobile-optimized interface with a collapsible header and adaptive grid layout.
+* **🌍 Multi-Language Support:** Instant switching between **English** and **Turkish**, handled via a custom lightweight state management system (no heavy external libraries).
+* **📈 Real-Time Market Data:** Live pricing updates via the CoinGecko API with auto-refresh intervals.
+* **☁️ Persistent Portfolio:** Users can log in via **Google Auth** to save their watchlist and holdings to the cloud (Firestore).
+* **📊 Interactive Charts:** Dynamic area charts (Recharts) that visualize price history (24h, 7d, 30d) and color-code based on profit/loss trends.
+* **🛡️ Smart Input Sanitization:** Automatically detects and fixes common ID errors (e.g., typing `shiba` auto-corrects to `shiba-inu`).
+* **🔢 Precision Formatting:** "Smart Decimal" logic automatically expands precision for micro-cap coins (e.g., Pepe at $0.000009) while keeping large cap coins clean.
+* **⚙️ Account Management:** Dedicated settings to reset portfolio data or permanently delete user accounts and data (GDPR compliant).
 
 ## 🛠️ Tech Stack
 
@@ -25,23 +24,22 @@ Built with **React (Vite)** and **Firebase**, it solves the common "stale data" 
 * **Authentication:** Firebase Auth (Google Provider)
 * **Database:** Cloud Firestore (NoSQL)
 * **Visualization:** Recharts
+* **Internationalization:** Custom State-based I18n
 * **API:** CoinGecko Public API
 
 ## 🧩 Technical Highlights & Challenges Solved
 
-### 1. Robust API Rate Limit Handling
+### 1. Custom Lightweight Localization
+Instead of using heavy libraries like `i18next`, I implemented a performant, state-driven translation engine.
+* **Solution:** A centralized dictionary object (`translations.js`) is accessed dynamically based on a `lang` state. This keeps bundle size small and allows for instant UI switching without page reloads.
+
+### 2. Robust API Rate Limit Handling
 The CoinGecko free tier is strict (approx. 10-15 calls/minute).
-* **Solution:** Implemented a centralized fetch logic with error trapping. If a `429 Rate Limit` error occurs, the UI degrades gracefully, showing a specific "Wait 60s" warning rather than crashing or showing a white screen.
-* **Optimization:** The app cleans user inputs *before* fetching to prevent wasted API calls on invalid IDs.
+* **Solution:** Implemented centralized fetch logic with error trapping. If a `429 Rate Limit` error occurs, the UI degrades gracefully, showing a specific "Wait 60s" warning rather than crashing.
 
-### 2. "Self-Healing" Data Integrity
+### 3. "Self-Healing" Data Integrity
 Users often misspell Coin IDs (e.g., "shib" instead of "shiba-inu").
-* **Solution:** I built a **Client-Side Sanitizer** that intercepts user input. If a known alias is detected, it is swapped for the valid API ID instantly.
-* **Database Repair:** On application load, the system scans the user's Firestore document. If it finds deprecated or broken IDs from previous sessions, it silently repairs the database in the background without user intervention.
-
-### 3. Infinite Reload Protection
-A common issue in React apps with database dependencies is "Render Loops" (Fetch -> Update State -> Re-render -> Fetch).
-* **Solution:** Implemented **Debounced Auto-Saving**. When a user types a quantity, the app waits 2 seconds for inactivity before writing to Firestore. This reduces database writes by ~90% and prevents UI stutter.
+* **Solution:** I built a **Client-Side Sanitizer** that intercepts user input. If a known alias is detected, it is swapped for the valid API ID instantly. On application load, the system also scans the database and silently repairs any broken IDs from previous sessions.
 
 ## 🚀 How to Run Locally
 
@@ -52,7 +50,6 @@ A common issue in React apps with database dependencies is "Render Loops" (Fetch
     ```
 
 2.  **Install Dependencies:**
-    You can install everything via `npm install`, or manually add the required libraries:
     ```bash
     npm install firebase recharts date-fns
     ```
@@ -76,12 +73,7 @@ A common issue in React apps with database dependencies is "Render Loops" (Fetch
     npm run dev
     ```
 
-## 🔮 Future Improvements
-
-* **Server-Side Caching:** Implementing a simple backend (Node/Express) to cache CoinGecko responses, allowing the app to scale to thousands of users without hitting API limits.
-* **Price Alerts:** Browser notifications when a target price is hit.
-* **Dark Mode:** A toggle for night-time viewing.
-
 ## 📄 License
 
 This project is open source and available under the [MIT License](LICENSE).
+
