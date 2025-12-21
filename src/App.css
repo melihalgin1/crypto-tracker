@@ -1,278 +1,82 @@
-/* =========================================
-   1. GLOBAL RESET & BODY
-   ========================================= */
-:root {
-  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  color-scheme: dark;
-}
+/* 1. TAILWIND DIRECTIVES */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
+/* 2. COLORFUL BACKGROUND OVERRIDE */
 body {
   margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
-  /* Centers the main app vertically */
-  display: flex;
-  align-items: center; 
-  justify-content: center;
-  /* Deep purple/blue gradient background */
-  background: radial-gradient(circle at top left, #2b1055, #7597de);
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  
+  /* Rich Gradient Background */
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #3b0764 100%);
   background-attachment: fixed;
-  color: white;
+  min-height: 100vh;
+  color: #111827;
 }
 
-/* =========================================
-   2. AUTH HEADER (Fixed Top-Right)
-   ========================================= */
-.auth-header {
-  position: fixed;   /* Sticks to the viewport window */
-  top: 20px;         /* 20px from the very top */
-  right: 20px;       /* 20px from the very right */
-  z-index: 9999;     /* Sit on top of absolutely everything */
+/* 3. TRANSPARENCY FIXES */
+.min-h-screen {
+  background-color: transparent !important;
 }
 
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.user-info img {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-}
-
-.auth-header button {
-  padding: 8px 16px;
-  font-size: 0.9rem;
-  background: rgba(255, 255, 255, 0.1); /* Glass style */
-  backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: white;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.auth-header button:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-/* =========================================
-   3. MAIN CONTAINER
-   ========================================= */
-.container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-  box-sizing: border-box; 
-}
-
-/* =========================================
-   4. TITLE STYLING
-   ========================================= */
-h1 {
-  font-size: 3.5rem;
-  margin-bottom: 2rem;
-  font-weight: 800;
-  letter-spacing: -2px;
-  /* Flex aligns the emoji and text */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 15px; 
-}
-
-/* The neon gradient applies ONLY to the text, not the emoji */
-.title-text {
-  background: linear-gradient(to right, #00f260, #0575e6);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent; 
-}
-
-/* =========================================
-   5. SEARCH BOX
-   ========================================= */
-.search-box {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 10px;
-  border-radius: 50px;
-  display: flex;         
-  align-items: center;   
-  justify-content: center;
+/* 4. CARD STYLING (Glassmorphism) */
+.bg-white {
+  background-color: rgba(255, 255, 255, 0.95) !important;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  margin: 0 auto 50px auto;
-  max-width: 500px; 
 }
 
-input {
-  background: transparent;
-  border: none;
-  color: white;
-  font-size: 1.1rem;
-  padding: 10px 20px;
-  outline: none;
-  width: 250px;
-  box-sizing: border-box;
+/* 5. NAVBAR STYLING */
+nav.bg-white\/90 {
+  background-color: rgba(255, 255, 255, 0.9) !important;
 }
 
-input::placeholder {
-  color: rgba(255, 255, 255, 0.6);
+/* 6. GRAPH FIXES */
+.recharts-wrapper {
+  width: 100% !important;
+  height: 100% !important;
 }
 
-button {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border: none;
-  padding: 12px 30px;
-  border-radius: 50px;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  white-space: nowrap; 
-  transition: transform 0.2s, box-shadow 0.2s;
+/* 7. TEXT FIXES */
+.text-gray-500 {
+  color: #64748b; 
 }
 
-/* Specific hover for the 'Add Coin' button (not the auth button) */
-.search-box button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(118, 75, 162, 0.4);
+/* 8. ANIMATIONS */
+@keyframes pulse-slow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+.animate-pulse {
+  animation: pulse-slow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-/* =========================================
-   6. GRID LAYOUT
-   ========================================= */
-.grid {
-  display: flex;              
-  flex-wrap: wrap;            
-  justify-content: center;    /* Keeps cards centered even if there's only 1 */
-  gap: 30px;
-  padding: 20px;
-  width: 100%;
-  box-sizing: border-box;
+/* 9. SCROLLBAR CUSTOMIZATION */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #0f172a; 
+}
+::-webkit-scrollbar-thumb {
+  background: #475569; 
+  border-radius: 5px;
+  border: 2px solid #0f172a;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
 }
 
-/* =========================================
-   7. GLASS CARDS
-   ========================================= */
-.card {
-  flex: 1 1 250px;            /* Responsive sizing */
-  max-width: 350px;           
-  min-width: 250px;           
-  
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 30px;
-  
-  text-align: center;         
-  display: flex;
-  flex-direction: column;
-  align-items: center;        
-  
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
+/* 10. REMOVE INPUT SPINNERS (The Fix) */
+/* Chrome, Safari, Edge, Opera */
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
 }
-
-.card:hover {
-  transform: translateY(-10px);
-  border-color: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.card h2 {
-  margin: 0;
-  font-size: 1.5rem;
-  color: rgba(255, 255, 255, 0.9);
-  margin-bottom: 10px;
-}
-
-.price {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin: 10px 0;
-  letter-spacing: -1px;
-}
-
-.change {
-  font-size: 1.1rem;
-  font-weight: 600;
-  padding: 5px 10px;
-  border-radius: 8px;
-  display: inline-block;
-}
-
-.change[style*="green"] {
-  background: rgba(0, 255, 0, 0.1);
-}
-
-.change[style*="red"] {
-  background: rgba(255, 0, 0, 0.1);
-}
-
-/* =========================================
-   8. MOBILE RESPONSIVENESS
-   ========================================= */
-@media (max-width: 600px) {
-  body {
-    align-items: flex-start; /* Start at top on mobile */
-    padding-top: 60px;       /* Give space for the fixed header */
-  }
-  
-  .container {
-    padding: 1rem;
-  }
-
-  h1 {
-    font-size: 2rem;
-    flex-direction: column; /* Stack rocket on top of text */
-    gap: 5px;
-  }
-
-  /* Header adjustments */
-  .auth-header {
-    top: 15px;
-    right: 15px;
-  }
-  
-  .auth-header button {
-    padding: 6px 12px; 
-    font-size: 0.8rem;
-  }
-
-  .user-info img {
-    width: 28px;
-    height: 28px;
-  }
-
-  /* Stack Search Box */
-  .search-box {
-    flex-direction: column; 
-    border-radius: 20px;    
-    width: 100%;           
-    padding: 20px;
-    box-sizing: border-box;
-  }
-
-  input {
-    width: 100%;       
-    margin-right: 0;   
-    margin-bottom: 15px; 
-    text-align: center;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-  }
-
-  /* Full width cards on mobile */
-  .card {
-    max-width: 100%; 
-  }
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }
